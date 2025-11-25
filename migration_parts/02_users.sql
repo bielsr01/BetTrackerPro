@@ -1,4 +1,0 @@
--- Insert users
-INSERT INTO public.users VALUES ('6fe49cd8-1711-47a3-9510-b9aeb61ca532', 'admin@admin.com', 'b1b1f76fdc8f7812285023cffbfca7c14a6b9cff782392ededb54b4764373dc9cb83a08ac456dc4472da7b2f8e8bd22cf29a838796fe9a1e00b797ace1091875.13685b1f2b62781ebae85fe0d448fad3', 'Gabriel Ramalho', 'admin', '2025-09-30 16:58:22.296');
-INSERT INTO public.users VALUES ('0ef000b3-2928-42c9-9a74-4d2d47965404', 'guilherme@guilherme.com', '1f517f211068ee33131b67d59d3a8aa86218deb94b1ff10664981a071d05d0531510dd96787a1ab267c661e299972298e152f19b6dbc02405fc5555e7d601dd6.e8ec1637af4d6f777af434a9ea4e37d2', 'Guilherme Ramalho', 'user', '2025-09-30 17:11:55.805');
-INSERT INTO public.users VALUES ('9027f206-3b89-4cc0-9466-c2eca06b9938', 'gustafnx@gmail.com', '0a9dc0b69634ec5cecac1b9be038a84f0374b0ddd2c90715648a0c7a0e71f1a5b1777584f3aed68a33d1e21ce15e3bf989ea31781129f3d8ec232e66812aac70.960eb29b9afd2d2f6c1abbf067b46318', 'Gustavo', 'user', '2025-11-13 21:29:33.020318');
