@@ -1,0 +1,65 @@
+import pdfplumber
+
+def extrair_dados_pdf_generico(caminho_pdf):
+    dados = {
+        'data_hora_evento': '',
+        'time_a': '',
+        'time_b': '',
+        'liga': '',
+        'esporte': '',
+        'apostas': [],
+        'lucro_porcentagem': ''
+    }
+    
+    with pdfplumber.open(caminho_pdf) as pdf:
+        pagina = pdf.pages[0]
+        texto = pagina.extract_text()
+        
+        # Encontra a linha com a data, times, etc.
+        linhas = texto.split('\n')
+        for i, linha in enumerate(linhas):
+            if 'Evento' in linha:
+                dados['data_hora_evento'] = linha.split('(')[1].strip(')')
+                
+                # Extrai times, esporte e liga da linha seguinte
+                if i + 2 < len(linhas):
+                    nomes_times = linhas[i + 2].split(' - ')
+                    if len(nomes_times) > 1:
+                        dados['time_a'] = nomes_times[0].strip()
+                        dados['time_b'] = nomes_times[1].strip()
+                    
+                    esporte_liga = linhas[i + 3].split(' / ')
+                    if len(esporte_liga) > 1:
+                        dados['esporte'] = esporte_liga[0].strip()
+                        dados['liga'] = esporte_liga[1].strip()
+
+            if '%' in linha and 'ROI' not in linha:
+                dados['lucro_porcentagem'] = linha.strip()
+
+        # Extração da tabela
+        tabela = pagina.extract_tables()
+        if tabela:
+            # Assumindo que a tabela é a primeira encontrada e tem cabeçalho
+            # que pode ser ignorado ou usado para validação
+            tabela_dados = tabela[0]
+            # Ignora o cabeçalho se ele estiver presente
+            if 'Chance' in tabela_dados[0]:
+                tabela_dados = tabela_dados[1:]
+            
+            for linha in tabela_dados:
+                if linha and len(linha) > 5: # Garante que é uma linha de dados completa
+                    aposta = {
+                        'casa_aposta': linha[0],
+                        'tipo_aposta': linha[1],
+                        'odd': linha[2],
+                        'valor_aposta': linha[3],
+                        'lucro': linha[4],
+                    }
+                    dados['apostas'].append(aposta)
+                    
+    return dados
+
+# Exemplo de uso:
+# substitua 'seu_pdf.pdf' pelo caminho do seu arquivo
+# dados_extraidos = extrair_dados_pdf_generico('seu_pdf.pdf')
+# print(dados_extraidos)

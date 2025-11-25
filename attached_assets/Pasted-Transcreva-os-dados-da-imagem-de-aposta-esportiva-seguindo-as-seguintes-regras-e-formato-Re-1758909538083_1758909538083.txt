@@ -1,0 +1,46 @@
+Transcreva os dados da imagem de aposta esportiva seguindo as seguintes regras e formato:
+---
+**Regras:**
+1. **Formato de Saída:** A saída deve seguir a ordem e o formato abaixo, sem informações extras.
+2. **Acentos e Símbolos:** Preserve acentos, símbolos e caracteres especiais.
+3. **Separação de Times:** O que separa o Time A do Time B é um traço maior (–).
+4. **Coluna de Chance:** Copie todo o conteúdo da coluna "Chance", independentemente do tamanho do texto.
+5. **Lucro%:** No canto superior direito, ignore o ROI e extraia apenas o valor percentual do Lucro.
+6. **Data:** Extraia apenas a data e hora no formato `dd/mm/aaaa HH:mm` do canto superior direito. Ignore o resto do texto na linha.
+7. **Liga e Time:** O Time A e a Liga são separados pela primeira barra (/) da linha. Tudo antes da primeira barra é o Time A, e tudo depois é a Liga.
+8. **Ignorar Informações Extras:** Não inclua informações como "Mostrar comissões", "Use sua própria taxa de câmbio", "Arredondar aposta até", etc.
+---
+**Formato de Saída:**
+Aqui está o prompt revisado para transcrição da imagem, seguindo todas as regras e padrões que você especificou. Este prompt pode ser usado como entrada para o seu sistema de OCR ou processamento de imagem, garantindo que a saída seja sempre organizada conforme solicitado:
+Prompt para Transcrição da Imagem de Aposta
+ CopiarTranscreva os dados da imagem de aposta esportiva seguindo as seguintes regras e formato:
+---
+**Regras:**
+1. **Formato de Saída:** A saída deve seguir a ordem e o formato abaixo, sem informações extras.
+2. **Acentos e Símbolos:** Preserve acentos, símbolos e caracteres especiais.
+3. **Separação de Times:** O que separa o Time A do Time B é um traço maior (–).
+4. **Coluna de Chance:** Copie todo o conteúdo da coluna "Chance", independentemente do tamanho do texto.
+5. **Lucro%:** No canto superior direito, ignore o ROI e extraia apenas o valor percentual do Lucro.
+6. **Data:** Extraia apenas a data e hora no formato `dd/mm/aaaa HH:mm` do canto superior direito. Ignore o resto do texto na linha.
+7. **Liga e Time:** O Time A e a Liga são separados pela primeira barra (/) da linha. Tudo antes da primeira barra é o Time A, e tudo depois é a Liga.
+8. **Ignorar Informações Extras:** Não inclua informações como "Mostrar comissões", "Use sua própria taxa de câmbio", "Arredondar aposta até", etc.
+---
+**Formato de Saída:**
+DATA: [dd/mm/aaaa HH:mm]
+ESPORTE: [Nome do Esporte]
+LIGA: [Nome da Liga]
+Time A: [Nome do Time A]
+Time B: [Nome do Time B]
+APOSTA 1:
+Casa: [Nome da Casa de Apostas]
+Odd: [Valor da Odd]
+Tipo: [Descrição do Tipo de Aposta]
+Stake: [Valor da Aposta]
+Lucro: [Valor do Lucro]
+APOSTA 2:
+Casa: [Nome da Casa de Apostas]
+Odd: [Valor da Odd]
+Tipo: [Descrição do Tipo de Aposta]
+Stake: [Valor da Aposta]
+Lucro: [Valor do Lucro]
+Lucro%: [Valor Percentual do Lucro]

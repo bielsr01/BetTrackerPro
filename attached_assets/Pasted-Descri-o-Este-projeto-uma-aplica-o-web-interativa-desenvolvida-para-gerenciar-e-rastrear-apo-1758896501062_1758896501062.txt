@@ -1,0 +1,91 @@
+Descrição:
+
+Este projeto é uma aplicação web interativa desenvolvida para gerenciar e rastrear apostas esportivas de forma eficiente. O principal objetivo é automatizar a entrada de dados usando screenshots de comprovantes de aposta e fornecer ferramentas para análise e acompanhamento do desempenho.
+
+Funcionalidades Principais:
+
+Entrada de Dados por Imagem:
+
+A interface inicial deve permitir que o usuário faça o upload de uma imagem (screenshot) ou simplesmente cole (Ctrl+V) uma imagem diretamente na tela.
+
+O sistema deve processar a imagem usando tecnologia de Reconhecimento Óptico de Caracteres por iA DA mistral ocr
+Solicite a api key quando necessario
+
+Casa de aposta: Nome da plataforma (ex: Bet365, Betano).
+
+Tipo de aposta: (ex: 1x2, Ambas Marcam).
+
+Odd da aposta: Valor decimal da cotação.
+
+Valor da aposta: Quantia investida.
+
+Lucro da aposta: Valor de retorno potencial.
+data e hora do evento
+
+Após o processamento da imagem, o sistema deve exibir os dados extraídos em campos editáveis para que o usuário possa revisá-los e, se necessário, corrigir.
+
+
+Gerenciamento de Apostas:
+
+Cada conjunto de dados extraído de uma imagem representa um "conjunto único" de duas apostas (conforme a sua descrição, onde uma ganha e a outra perde).
+O sistema é para gerenciamento de apostas do tipo surebet
+O sistema deve apresentar um painel com todas as apostas carregadas.
+
+Nesse painel, deve haver uma opção para marcar a aposta como "resolvida" em uma das duas casas de aposta. Ao marcar, o sistema deve:
+
+Registrar que a aposta associada a essa casa foi a ganhadora.
+
+Automaticamente calcular e atualizar o lucro total para esse conjunto de apostas (lucro da aposta ganhadora menos o valor da aposta perdida).
+
+O sistema deve ter as seguintes opções para categorizar o resultado da aposta:
+
+Ganhou: Marca a aposta como vitoriosa.
+
+Perdeu: Marca a aposta como perdedora.
+
+Devolvido: Marca a aposta com o valor devolvido (cashout, void, etc.).
+
+Filtros e Relatórios:
+
+A aplicação deve conter uma aba de filtros para que o usuário possa segmentar as apostas e visualizar o desempenho. Os filtros devem incluir:
+
+Status da aposta: Filtrar por apostas pendentes.
+
+Valores: Filtrar por valor apostado e lucro.
+
+Período: Filtrar por dia, semana ou mês
+
+menu na side bar teste de upload
+esta tela deve possuir a opção de carregar  a imagem e o sistema retornar o texto que a ia esta lendo e retornando a fim de verificações e testes
+
+A ia deve estar configurada para encontrar as seguintes variáveis na imagem
+por exemplo 
+DATA: 29/09/22 15:48
+ESPORTE: Futebol
+LIGA: Liga Pro Jupiler
+Time A: OH Leuven
+Time B: Anderlecht
+
+APOSTA 1: Casa: Cassino
+Odd: 2.25
+Tipo: Acima 2.25
+Stake: 2650.00
+Lucro: 106.00
+Titular da conta (aqui deve selecionar dos dados cadastrados em sistema anteriormente)
+
+APOSTA 2: Casa: Betano
+Odd: 2.25
+Tipo: Abaixo 2.25
+Stake: 2120.00
+Lucro: 106.00
+Titular da conta (aqui deve selecionar dos dados cadastrados em sistema anteriormente)
+
+LUCRO%: 2.22%
+
+estou enviando um exemplo de imagem que carreguei no sistema junto em anexo para que analise junto e faça as configurações necessárias na tela
+
+adicione também uma tela para cadastro de titulares de conta em casa de aposta e cadastro de casas de aposta dentro dos titulares
+As informações requeridas são nome email/usuario senha 
+mas retire a obrigação de ter todos os dados inseridos apenas o nome do titular e nome da casa já basta
+
+por enquanto não adicione tela de login no sistema geral crie o sistema direto
