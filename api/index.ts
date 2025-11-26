@@ -1,12 +1,11 @@
-import serverlessExpress from "@vendia/serverless-express";
 import app, { initializeApp } from "../server/app";
 
-let handler: any;
+let isInitialized = false;
 
-export default async function (req: any, res: any) {
-  if (!handler) {
+export default async function handler(req: any, res: any) {
+  if (!isInitialized) {
     await initializeApp();
-    handler = serverlessExpress({ app });
+    isInitialized = true;
   }
-  return handler(req, res);
+  return (app as any)(req, res);
 }
