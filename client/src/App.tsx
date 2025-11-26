@@ -22,6 +22,7 @@ import ManagementPage from "@/pages/management";
 import AuthPage from "@/pages/auth-page";
 import UsersPage from "@/pages/users-page";
 import ProfilePage from "@/pages/profile-page";
+import AdminMigrationPage from "@/pages/admin-migration";
 import NotFound from "@/pages/not-found";
 
 function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
@@ -65,6 +66,7 @@ function Router() {
       <ProtectedRoute path="/dashboard" component={() => <AuthenticatedLayout><Dashboard /></AuthenticatedLayout>} />
       <ProtectedRoute path="/users" component={() => <AuthenticatedLayout><UsersPage /></AuthenticatedLayout>} />
       <ProtectedRoute path="/profile" component={() => <AuthenticatedLayout><ProfilePage /></AuthenticatedLayout>} />
+      <ProtectedRoute path="/admin/migration" component={() => <AuthenticatedLayout><AdminMigrationPage /></AuthenticatedLayout>} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -549,6 +549,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Database migration routes (admin only)
+  app.post("/api/admin/migration/test-connection", requireAdmin, async (req, res) => {
+    try {
+      const { supabaseUrl } = req.body;
+      
+      if (!supabaseUrl) {
+        res.status(400).json({ error: "Supabase URL is required" });
+        return;
+      }
+
+      const { MigrationService } = await import("./migration-service");
+      const migrationService = new MigrationService();
+      const result = await migrationService.testConnection(supabaseUrl);
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Connection test error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : "Connection test failed" 
+      });
+    }
+  });
+
+  app.post("/api/admin/migration/execute", requireAdmin, async (req, res) => {
+    try {
+      const { supabaseUrl } = req.body;
+      
+      if (!supabaseUrl) {
+        res.status(400).json({ error: "Supabase URL is required" });
+        return;
+      }
+
+      console.log("[Migration] Starting migration to Supabase...");
+      
+      const { MigrationService } = await import("./migration-service");
+      const migrationService = new MigrationService();
+      const result = await migrationService.migrate(supabaseUrl);
+      
+      if (result.success) {
+        console.log(`[Migration] Complete! ${result.totalRecords} records migrated`);
+      } else {
+        console.error("[Migration] Failed:", result.error);
+      }
+      
+      res.json(result);
+    } catch (error) {
+      console.error("Migration error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : "Migration failed" 
+      });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
