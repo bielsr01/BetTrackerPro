@@ -1,10 +1,6 @@
 import serverlessExpress from "@vendia/serverless-express";
 import app, { initializeApp } from "../server/app";
 
-export const config = {
-  runtime: "nodejs",
-};
-
 let handler: any;
 
 export default async function (req: any, res: any) {
