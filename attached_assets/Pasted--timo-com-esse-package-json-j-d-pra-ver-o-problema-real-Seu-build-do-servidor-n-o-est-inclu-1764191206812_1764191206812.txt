@@ -1,0 +1,98 @@
+Ótimo — com esse package.json já dá pra ver o problema real:
+👉 Seu build do servidor não está incluindo a pasta /server/routes na saída dist/.
+
+Por quê?
+
+Porque seu script de build usa:
+
+"build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist"
+
+
+Ou seja:
+
+Você só bundleia o arquivo server/index.ts
+
+O esbuild não inclui arquivos que não são importados diretamente
+
+E caso você faça imports "parciais" (ex: diretório server/routes com vários arquivos), o esbuild só inclui o que ele rastrear
+
+Se você usa import "./routes" sem extensão ou sem referência direta para arquivos .ts, o esbuild simplesmente ignora
+
+No deploy, a pasta /server/routes não existe dentro de /var/task, logo o Node falha com:
+
+ERR_MODULE_NOT_FOUND: Cannot find module '/var/task/server/routes'
+
+
+Rodar local funciona porque localmente a pasta existe, mas no build não existe mais.
+
+✅ Como resolver (qualquer uma das opções abaixo funciona)
+✔ Opção 1: adicionar extensão no import
+
+Se no seu server/index.ts você tem:
+
+import routes from "./routes";
+
+
+Troque para:
+
+import routes from "./routes/index.js"; // se for diretório
+// ou
+import routes from "./routes.js"; // se for arquivo
+
+
+ESM exige extensão.
+Sem extensão, o esbuild ignora e não inclui no bundle.
+
+✔ Opção 2: dizer ao esbuild para copiar os arquivos “não bundleados”
+
+Adicione --asset-names e --loader para pastas e .ts:
+
+"build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist --loader:.ts=ts --loader:.json=json --outbase=server --metafile"
+
+
+Ou uma forma mais simples:
+
+👉 Copiar manualmente a pasta server para dist:
+
+No package.json:
+
+"build": "vite build && esbuild server/index.ts --bundle --platform=node --format=esm --outdir=dist && cp -r server dist/server"
+
+
+No Windows:
+
+xcopy server dist/server /E /I
+
+
+Isso garante que dist/server/routes/... exista no deploy.
+
+✔ Opção 3: transformar tudo em um único bundle
+
+Se você quiser um arquivo único (como Lambda geralmente quer):
+
+"build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist --minify"
+
+
+Mas esse método só funciona se TODOS os imports são arquivos explícitos como:
+
+import "./routes/user.ts";
+import "./routes/admin.ts";
+
+✔ Opção 4: usar tsup (mais simples que esbuild)
+
+Substituir totalmente o build do servidor:
+
+npm i -D tsup
+
+
+E no package.json:
+
+"build": "vite build && tsup server/index.ts --format esm --dts --splitting --out-dir dist"
+
+📌 Conclusão
+
+Seu problema não é path errado, e sim:
+
+❌ A pasta server/routes não vai para o deploy
+❌ O esbuild não está incluindo os arquivos
+❌ O Node não encontra o módulo no ambiente final
