@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "NODE_ENV=development tsx server/index.ts",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
-    "build:vercel": "vite build && esbuild api/_index.ts --platform=node --packages=external --bundle --format=esm --outfile=api/index.mjs",
+    "build:vercel": "vite build && esbuild api/_index.ts --platform=node --bundle --format=esm --outfile=api/index.mjs --external:pg --external:pg-native --external:better-sqlite3 --external:mysql2 --external:tedious --external:oracledb --external:@aws-sdk/* --external:pdfplumber",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push"
