@@ -3,7 +3,7 @@
   "outputDirectory": "dist/public",
   "framework": null,
   "functions": {
-    "api/**/*.ts": {
+    "api/index.js": {
       "runtime": "@vercel/node@3.2.0"
     }
   },
